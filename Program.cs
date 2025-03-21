@@ -43,6 +43,9 @@ class Program
                     {
                         switch (cell.state)
                         {
+                            case Cell.State.empty:
+                                Console.Write("   ");
+                                break;
                             case Cell.State.bomb:
                                 Console.Write("X  ");
                                 break;
@@ -85,12 +88,14 @@ class Program
         Board board;
         internal enum State
         {
+            empty,
             bomb,
             num
         }
 
         public bool closed = true;
         public string closedView = "[] ";
+        public int numView = 0;
 
         public static List<Cell> cells = new List<Cell>();
 
@@ -121,7 +126,7 @@ class Program
                     if (rnd.Next(0, 101) >= 100 - bombСoefficient)
                         cell = new Cell(i, j, true, State.bomb, board);
                     else
-                        cell = new Cell(i, j, true, State.num, board);
+                        cell = new Cell(i, j, true, State.empty, board);
 
                     cells.Add(cell);
                 }
