@@ -14,7 +14,7 @@ class Program
         {
             Height = height; Width = width; this.cell = cell;
         }
-        
+
         internal void DrawAndUpdate()
         {
             Console.Clear();
@@ -22,10 +22,10 @@ class Program
             Console.Write("\n       ");
             for (int i = 1; i < Width + 1; i++)
             {
-                if(i < 9)Console.Write(i + "  ");
+                if (i < 9) Console.Write(i + "  ");
                 else Console.Write(i + " ");
             }
-            
+
             Console.WriteLine("\n");
             for (int i = 1; i < Height + 1; i++)
             {
@@ -33,7 +33,7 @@ class Program
                 else Console.Write("   " + i + "  ");
 
                 for (int j = 1; j < Width + 1; j++)
-                {   
+                {
                     cell = cell.getCell(i, j);
                     if (cell.closed)
                     {
@@ -183,7 +183,7 @@ class Program
             string coordinateXstr = string.Empty;
             string coordinateYstr = string.Empty;
 
-            int coordinateX = 1; 
+            int coordinateX = 1;
             int coordinateY = 1;
 
             while (true)
