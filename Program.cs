@@ -25,7 +25,7 @@ class Program
                 if(i < 9)Console.Write(i + "  ");
                 else Console.Write(i + " ");
             }
-
+            //////////////
             Console.WriteLine("\n");
             for (int i = 1; i < Height + 1; i++)
             {
