@@ -1,0 +1,14 @@
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\bin\Debug\net8.0\Minesweeper.exe
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\bin\Debug\net8.0\Minesweeper.deps.json
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\bin\Debug\net8.0\Minesweeper.runtimeconfig.json
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\bin\Debug\net8.0\Minesweeper.dll
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\bin\Debug\net8.0\Minesweeper.pdb
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.AssemblyInfoInputs.cache
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.AssemblyInfo.cs
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.csproj.CoreCompileInputs.cache
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.dll
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\refint\Minesweeper.dll
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.pdb
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\Minesweeper.genruntimeconfig.cache
+C:\Users\ShuKu\source\repos\games_in_console\Minesweeper\obj\Debug\net8.0\ref\Minesweeper.dll
