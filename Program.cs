@@ -14,8 +14,8 @@ class Program
         {
             Height = height; Width = width; this.cell = cell;
         }
-
-        internal void Draw()
+        
+        internal void DrawAndUpdate()
         {
             Console.Clear();
 
@@ -37,17 +37,17 @@ class Program
                     cell = cell.getCell(i, j);
                     if (cell.closed)
                     {
-                        Console.Write("[] ");
+                        Console.Write(cell.closedView);
                     }
                     else
                     {
                         switch (cell.state)
                         {
                             case Cell.State.bomb:
-                                Console.Write("X");
+                                Console.Write("X  ");
                                 break;
                             case Cell.State.num:
-                                Console.Write("0");
+                                Console.Write("0  ");
                                 break;
                             default:
                                 continue;
@@ -65,6 +65,7 @@ class Program
                 if (cell.x == x && cell.y == y)
                 {
                     cell.closed = false;
+                    cell.closedView = string.Empty;
                 }
             }
         }
@@ -89,6 +90,7 @@ class Program
         }
 
         public bool closed = true;
+        public string closedView = "[] ";
 
         public static List<Cell> cells = new List<Cell>();
 
@@ -153,8 +155,61 @@ class Program
         internal void GamePlay()
         {
             Console.ForegroundColor = ConsoleColor.White;
-            board.Draw();
-            Console.Write("\n enter the coordinates as X Y:");
+            string coordinateXstr = string.Empty;
+            string coordinateYstr = string.Empty;
+
+            int coordinateX = 1; 
+            int coordinateY = 1;
+
+            while (true)
+            {
+                Console.Clear();
+                board.DrawAndUpdate();
+                Console.Write("\n\t enter the coordinates (as X Y): ");
+
+                if (Console.ReadLine() is string coordinates && !string.IsNullOrEmpty(coordinates))
+                {
+                    if (coordinates.Split(' ').Length == 2)
+                    {
+                        coordinateXstr = coordinates.Split(' ')[0];
+                        coordinateYstr = coordinates.Split(' ')[1];
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("you entered incorrect values.");
+                        Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+
+                    if (int.Parse(coordinateXstr) <= board.Height && int.Parse(coordinateYstr) <= board.Width && coordinateXstr.Length < 1000 && coordinateYstr.Length < 1000 && int.Parse(coordinateXstr) > 0 && int.Parse(coordinateYstr) > 0)
+                    {
+                        coordinateX = int.Parse(coordinateXstr);
+                        coordinateY = int.Parse(coordinateYstr);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("you entered incorrect values.");
+                        Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+
+                    board.OpenCell(coordinateX, coordinateY);
+                    board.DrawAndUpdate();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("you entered incorrect values.");
+                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+            }
+            
         }
 
     }
