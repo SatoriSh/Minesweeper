@@ -50,7 +50,7 @@ class Program
                                 Console.Write("X  ");
                                 break;
                             case Cell.State.num:
-                                Console.Write("0  ");
+                                Console.Write($"{cell.numView}  ");
                                 break;
                             default:
                                 continue;
@@ -81,6 +81,13 @@ class Program
             }
         }
 
+        internal void Initialization()
+        {
+            foreach (Cell cell in Cell.cells)
+            {
+                if (cell.state != Cell.State.bomb) cell.CheckTheCellNeighbors(cell);
+            }
+        }
     }
 
     class Cell
@@ -143,6 +150,19 @@ class Program
             return null;
         }
 
+        public void CheckTheCellNeighbors(Cell cell)
+        {
+            int bombCount = 0;
+
+            if (getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y).state == State.bomb) bombCount++;
+
+            if (getCell(x, y).x + 1 <= board.Height)
+                if (getCell(x + 1, y).state == State.bomb) bombCount++;
+
+            if (bombCount > 0) cell.state = State.num;
+            cell.numView = bombCount;
+        }
     }
 
     class Game
@@ -205,6 +225,9 @@ class Program
                     board.OpenCell(coordinateX, coordinateY);
                     board.DrawAndUpdate();
                     board.OpenAllCells();
+                    Console.ReadLine();
+                    board.Initialization();
+                    board.DrawAndUpdate();
                 }
                 else
                 {
