@@ -153,6 +153,7 @@ class Program
         public void CheckTheCellNeighbors(Cell cell)
         {
             int bombCount = 0;
+
             // top left
             if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
                 if (getCell(x - 1,y - 1).state == State.bomb) bombCount++;
@@ -187,6 +188,51 @@ class Program
 
             if (bombCount > 0) cell.state = State.num;
             cell.numView = bombCount;
+        }
+
+        public void AutoOpenEmptyCells(int x, int y) 
+        {
+            getCell(x, y).closed = false;
+
+            // top left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y - 1).state == State.num) getCell(x - 1, y - 1).closed = false;
+                else if (getCell(x - 1, y - 1).state == State.empty && getCell(x - 1, y - 1).closed) AutoOpenEmptyCells(x - 1,y - 1);
+
+            // top
+            if (getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y).state == State.num) getCell(x - 1, y).closed = false;
+                else if (getCell(x - 1, y).state == State.empty && getCell(x - 1, y).closed) AutoOpenEmptyCells(x - 1, y);
+
+            // top right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y + 1).state == State.num) getCell(x - 1, y + 1).closed = false;
+                else if (getCell(x - 1, y + 1).state == State.empty && getCell(x - 1, y + 1).closed) AutoOpenEmptyCells(x - 1, y + 1);
+
+            // right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0)
+                if (getCell(x, y + 1).state == State.num) getCell(x, y + 1).closed = false;
+                else if (getCell(x, y + 1).state == State.empty && getCell(x, y + 1).closed) AutoOpenEmptyCells(x, y + 1);
+
+            // bottom left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y - 1).state == State.num) getCell(x + 1, y - 1).closed = false;
+                else if (getCell(x + 1, y - 1).state == State.empty && getCell(x + 1, y - 1).closed) AutoOpenEmptyCells(x + 1, y - 1);
+
+            // bottom
+            if (getCell(x, y).x + 1 <= board.Height)
+                if (getCell(x + 1, y).state == State.num) getCell(x + 1, y).closed = false;
+                else if (getCell(x + 1, y).state == State.empty && getCell(x + 1, y).closed) AutoOpenEmptyCells(x + 1, y);
+
+            // bottom right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y + 1).state == State.num) getCell(x + 1, y + 1).closed = false;
+                else if (getCell(x + 1, y + 1).state == State.empty && getCell(x + 1, y + 1).closed) AutoOpenEmptyCells(x + 1, y + 1);
+
+            //left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0)
+                if (getCell(x, y - 1).state == State.num) getCell(x, y - 1).closed = false;
+                else if (getCell(x, y - 1).state == State.empty && getCell(x, y - 1).closed) AutoOpenEmptyCells(x, y - 1);
         }
     }
 
@@ -229,33 +275,47 @@ class Program
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("you entered incorrect values.");
+                        Console.WriteLine("\n\t you entered incorrect values.");
+                        Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    try
+                    {
+                        if (int.Parse(coordinateXstr) <= board.Height && int.Parse(coordinateYstr) <= board.Width && coordinateXstr.Length < 1000 && coordinateYstr.Length < 1000 && int.Parse(coordinateXstr) > 0 && int.Parse(coordinateYstr) > 0)
+                        {
+                            coordinateX = int.Parse(coordinateXstr);
+                            coordinateY = int.Parse(coordinateYstr);
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\n\t you entered incorrect values.");
+                            Console.ReadLine();
+                            Console.ForegroundColor = ConsoleColor.White;
+                            continue;
+                        }
+                    }
+                    catch
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n\t you entered incorrect values.");
                         Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
 
-                    if (int.Parse(coordinateXstr) <= board.Height && int.Parse(coordinateYstr) <= board.Width && coordinateXstr.Length < 1000 && coordinateYstr.Length < 1000 && int.Parse(coordinateXstr) > 0 && int.Parse(coordinateYstr) > 0)
-                    {
-                        coordinateX = int.Parse(coordinateXstr);
-                        coordinateY = int.Parse(coordinateYstr);
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("you entered incorrect values.");
-                        Console.ReadLine();
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
                     board.DrawAndUpdate();
+
                     board.OpenCell(coordinateX, coordinateY);
+                    if (cell.getCell(coordinateX, coordinateY).state == Cell.State.empty)
+                        cell.AutoOpenEmptyCells(coordinateX, coordinateY);
                     
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("you entered incorrect values.");
+                    Console.WriteLine("\n\t you entered incorrect values.");
                     Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
