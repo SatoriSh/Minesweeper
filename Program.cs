@@ -14,7 +14,7 @@ class Program
         {
             Height = height; Width = width; this.cell = cell;
         }
-        
+
         internal void DrawAndUpdate()
         {
             Console.Clear();
@@ -22,7 +22,7 @@ class Program
             Console.Write("\n       ");
             for (int i = 1; i < Width + 1; i++)
             {
-                if(i < 9)Console.Write(i + "  ");
+                if (i < 9) Console.Write(i + "  ");
                 else Console.Write(i + " ");
             }
 
@@ -33,7 +33,7 @@ class Program
                 else Console.Write("   " + i + "  ");
 
                 for (int j = 1; j < Width + 1; j++)
-                {   
+                {
                     cell = cell.getCell(i, j);
                     if (cell.closed)
                     {
@@ -50,7 +50,7 @@ class Program
                                 Console.Write("X  ");
                                 break;
                             case Cell.State.num:
-                                Console.Write("0  ");
+                                Console.Write($"{cell.numView}  ");
                                 break;
                             default:
                                 continue;
@@ -81,6 +81,13 @@ class Program
             }
         }
 
+        internal void Initialization()
+        {
+            foreach (Cell cell in Cell.cells)
+            {
+                if (cell.state != Cell.State.bomb) cell.CheckTheCellNeighbors(cell);
+            }
+        }
     }
 
     class Cell
@@ -143,6 +150,44 @@ class Program
             return null;
         }
 
+        public void CheckTheCellNeighbors(Cell cell)
+        {
+            int bombCount = 0;
+            // top left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1,y - 1).state == State.bomb) bombCount++;
+
+            // top
+            if (getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y).state == State.bomb) bombCount++;
+
+            // top right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y + 1).state == State.bomb) bombCount++;
+
+            // right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0)
+                if (getCell(x, y + 1).state == State.bomb) bombCount++;
+
+            // bottom left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y - 1).state == State.bomb) bombCount++;
+
+            // bottom
+            if (getCell(x, y).x + 1 <= board.Height)
+                if (getCell(x + 1, y).state == State.bomb) bombCount++;
+
+            // bottom right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y + 1).state == State.bomb) bombCount++;
+
+            //left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0)
+                if (getCell(x, y - 1).state == State.bomb) bombCount++;
+
+            if (bombCount > 0) cell.state = State.num;
+            cell.numView = bombCount;
+        }
     }
 
     class Game
@@ -163,7 +208,7 @@ class Program
             string coordinateXstr = string.Empty;
             string coordinateYstr = string.Empty;
 
-            int coordinateX = 1; 
+            int coordinateX = 1;
             int coordinateY = 1;
 
             while (true)
@@ -204,6 +249,10 @@ class Program
 
                     board.OpenCell(coordinateX, coordinateY);
                     board.DrawAndUpdate();
+                    board.OpenAllCells();
+                    Console.ReadLine();
+                    board.Initialization();
+                    board.DrawAndUpdate();
                 }
                 else
                 {
@@ -214,9 +263,7 @@ class Program
                     continue;
                 }
             }
-            
         }
-
     }
 
     static void Main(string[] args)
