@@ -208,8 +208,10 @@ class Program
             string coordinateXstr = string.Empty;
             string coordinateYstr = string.Empty;
 
-            int coordinateX = 1;
-            int coordinateY = 1;
+            int coordinateX = int.MinValue;
+            int coordinateY = int.MinValue;
+
+            board.Initialization();
 
             while (true)
             {
@@ -246,13 +248,9 @@ class Program
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
-
+                    board.DrawAndUpdate();
                     board.OpenCell(coordinateX, coordinateY);
-                    board.DrawAndUpdate();
-                    board.OpenAllCells();
-                    Console.ReadLine();
-                    board.Initialization();
-                    board.DrawAndUpdate();
+                    
                 }
                 else
                 {
@@ -270,7 +268,7 @@ class Program
     {
         Cell cell = new Cell(0, 0, true, Cell.State.num, null);
         Board board = new Board(20, 30, cell);
-        cell.setBoard(board);// отложенная инициализация
+        cell.setBoard(board);// delayed initialization
         Game game = new Game(board, cell);
 
         game.Initialization(15);
