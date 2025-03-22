@@ -153,12 +153,37 @@ class Program
         public void CheckTheCellNeighbors(Cell cell)
         {
             int bombCount = 0;
+            // top left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1,y - 1).state == State.bomb) bombCount++;
 
+            // top
             if (getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
                 if (getCell(x - 1, y).state == State.bomb) bombCount++;
 
+            // top right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x - 1 <= board.Height && getCell(x, y).x - 1 > 0)
+                if (getCell(x - 1, y + 1).state == State.bomb) bombCount++;
+
+            // right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0)
+                if (getCell(x, y + 1).state == State.bomb) bombCount++;
+
+            // bottom left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y - 1).state == State.bomb) bombCount++;
+
+            // bottom
             if (getCell(x, y).x + 1 <= board.Height)
                 if (getCell(x + 1, y).state == State.bomb) bombCount++;
+
+            // bottom right
+            if (getCell(x, y).y + 1 <= board.Width && getCell(x, y).y + 1 > 0 && getCell(x, y).x + 1 <= board.Height && getCell(x, y).x + 1 > 0)
+                if (getCell(x + 1, y + 1).state == State.bomb) bombCount++;
+
+            //left
+            if (getCell(x, y).y - 1 <= board.Width && getCell(x, y).y - 1 > 0)
+                if (getCell(x, y - 1).state == State.bomb) bombCount++;
 
             if (bombCount > 0) cell.state = State.num;
             cell.numView = bombCount;
