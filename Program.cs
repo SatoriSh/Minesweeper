@@ -310,7 +310,6 @@ class Program
                     board.OpenCell(coordinateX, coordinateY);
                     if (cell.getCell(coordinateX, coordinateY).state == Cell.State.empty)
                         cell.AutoOpenEmptyCells(coordinateX, coordinateY);
-                    
                 }
                 else
                 {
@@ -331,7 +330,7 @@ class Program
         cell.setBoard(board);// delayed initialization
         Game game = new Game(board, cell);
 
-        game.Initialization(15);
+        game.Initialization(10);
         game.GamePlay();
     }
 }
