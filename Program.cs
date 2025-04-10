@@ -328,15 +328,22 @@ class Program
 
         internal void gameover()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nYou've lost");
-            Console.ForegroundColor = ConsoleColor.White;
             bool openCells = false;
 
             while (true)
             {
-                if (!openCells) Console.WriteLine("(1) Open all cells");
-                Console.WriteLine("(2) Exit");
+                Console.Clear();
+                board.DrawAndUpdate();
+                if (!openCells)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nYou've lost");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine("(1) Open all cells");
+                }
+                
+                Console.WriteLine("\n(2) Exit");
                 try
                 {
                     int playerChoice = int.Parse(Console.ReadLine());
@@ -353,6 +360,7 @@ class Program
                             break;
                         default:
                             Console.WriteLine("Error");
+                            Console.ReadLine();
                             continue;
                     }
                 }
@@ -361,7 +369,6 @@ class Program
                     Console.WriteLine("Error");
                     Console.ReadLine();
                 }
-                Console.ReadLine();
             }
         }
     }
