@@ -261,7 +261,6 @@ class Program
 
             while (true)
             {
-                Console.Clear();
                 board.DrawAndUpdate();
                 Console.Write("\n\t enter the coordinates (as X Y): ");
 
@@ -308,6 +307,11 @@ class Program
                     board.DrawAndUpdate();
 
                     board.OpenCell(coordinateX, coordinateY);
+                    if (cell.getCell(coordinateX, coordinateY).state == Cell.State.bomb)
+                    {
+                        board.DrawAndUpdate();
+                        gameover();
+                    }
                     if (cell.getCell(coordinateX, coordinateY).state == Cell.State.empty)
                         cell.AutoOpenEmptyCells(coordinateX, coordinateY);
                 }
@@ -319,6 +323,45 @@ class Program
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
+            }
+        }
+
+        internal void gameover()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\nYou've lost");
+            Console.ForegroundColor = ConsoleColor.White;
+            bool openCells = false;
+
+            while (true)
+            {
+                if (!openCells) Console.WriteLine("(1) Open all cells");
+                Console.WriteLine("(2) Exit");
+                try
+                {
+                    int playerChoice = int.Parse(Console.ReadLine());
+
+                    switch (playerChoice)
+                    {
+                        case 1:
+                            board.OpenAllCells();
+                            board.DrawAndUpdate();
+                            openCells = true;
+                            break;
+                        case 2:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Error");
+                            continue;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Error");
+                    Console.ReadLine();
+                }
+                Console.ReadLine();
             }
         }
     }
